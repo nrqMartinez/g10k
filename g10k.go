@@ -231,14 +231,15 @@ func main() {
 			config = ConfigSettings{CacheDir: cachedir, ForgeCacheDir: cachedir, ModulesCacheDir: cachedir, EnvCacheDir: cachedir, Sources: sm, Forge: forgeDefaultSettings, Maxworker: maxworker, UseCacheFallback: usecacheFallback, MaxExtractworker: maxExtractworker, RetryGitCommands: retryGitCommands}
 			target = pfLocation
 			puppetfile := readPuppetfile(target, "", "cmdlineparam", false)
-      ##
+			//puppetfile.workDir = "."
+      // added
 			if len(cacheDirParam) > 0 {
 				Debugf("Using -moduledir parameter set to : " + moduleDirParam)
 				puppetfile.workDir = moduleDirParam
 		  } else {
 				puppetfile.workDir = "."
 			}
-      ##
+      //
 			pfm := make(map[string]Puppetfile)
 			pfm["cmdlineparam"] = puppetfile
 			resolvePuppetfile(pfm)
