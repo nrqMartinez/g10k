@@ -233,7 +233,7 @@ func main() {
 			puppetfile := readPuppetfile(target, "", "cmdlineparam", false)
 			//puppetfile.workDir = "."
       // added
-			if len(cacheDirParam) > 0 {
+			if len(moduleDirParam) > 0 {
 				Debugf("Using -moduledir parameter set to : " + moduleDirParam)
 				puppetfile.workDir = moduleDirParam
 		  } else {
