@@ -61,7 +61,7 @@ func resolveGitRepositories(uniqueGitModules map[string]GitModule) {
 		Debugf("git repo url " + url)
 		privateKey := gm.privateKey
 		if len(sshKeyParam) > 0 {
-			privateKey := sshKeyParam
+			privateKey = sshKeyParam
 		}
 		go func(url string, privateKey string, gm GitModule, bar *uiprogress.Bar) {
 			// Try to receive from the concurrentGoroutines channel. When we have something,
@@ -107,7 +107,7 @@ func doMirrorOrUpdate(url string, workDir string, sshPrivateKey string, allowFai
 	}
 
 	if needSSHKey {
-		er = executeCommand("ssh-agent bash -c 'ssh-add "+sshPrivateKey+"; "+gitCmd+"'", config.Timeout, allowFail)
+		er = executeCommand("ssh-agent bash -c 'ssh-add \""+sshPrivateKey+"\"; "+gitCmd+"'", config.Timeout, allowFail)
 	} else {
 		er = executeCommand(gitCmd, config.Timeout, allowFail)
 	}
@@ -136,7 +136,7 @@ func syncToModuleDir(srcDir string, targetDir string, tree string, allowFail boo
 			Fatalf("Could not find cached git module " + srcDir)
 		}
 	}
-	logCmd := "git --git-dir " + srcDir + " rev-parse --verify '" + tree + "^{object}'"
+	logCmd := "git --git-dir " + srcDir + " rev-parse --verify '" + tree + "'"
 	er := executeCommand(logCmd, config.Timeout, allowFail)
 	hashFile := targetDir + "/.latest_commit"
 	needToSync := true
