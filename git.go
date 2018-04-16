@@ -60,6 +60,9 @@ func resolveGitRepositories(uniqueGitModules map[string]GitModule) {
 	for url, gm := range uniqueGitModules {
 		Debugf("git repo url " + url)
 		privateKey := gm.privateKey
+		if len(sshKeyParam) > 0 {
+			privateKey := sshKeyParam
+		}
 		go func(url string, privateKey string, gm GitModule, bar *uiprogress.Bar) {
 			// Try to receive from the concurrentGoroutines channel. When we have something,
 			// it means we can start a new goroutine because another one finished.
@@ -69,7 +72,7 @@ func resolveGitRepositories(uniqueGitModules map[string]GitModule) {
 			defer bar.Incr()
 			defer wg.Done()
 
-			if len(gm.privateKey) > 0 {
+			if len(privateKey) > 0 {
 				Debugf("git repo url " + url + " with ssh key " + privateKey)
 			} else {
 				Debugf("git repo url " + url + " without ssh key")
