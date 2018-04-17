@@ -96,7 +96,7 @@ func resolveGitRepositories(uniqueGitModules map[string]GitModule) {
 
 func doMirrorOrUpdate(url string, workDir string, sshPrivateKey string, allowFail bool, retryCount int) bool {
 	needSSHKey := true
-	if strings.Contains(url, "github.com") || len(sshPrivateKey) == 0 {
+	if (strings.Contains(url, "github.com") || len(sshPrivateKey) == 0) && keyParam == false {
 		needSSHKey = false
 	}
 
